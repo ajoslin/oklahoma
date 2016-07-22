@@ -64,6 +64,10 @@ An object where the keys are the ids of available states, and the values are an 
 
 Any enter or leave callback that returns a rejected promise will abort the current state transition.
 
+#### `fsm.current() -> string`
+
+Returns the id of the current state.
+
 #### `fsm.go(state, [...args]) -> Promise`
 
 Transition to the given state id. The id must be a valid target of the current state.
