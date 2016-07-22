@@ -59,14 +59,16 @@ Type: `object`
 An object where the keys are the ids of available states, and the values are an object describing each state:
 
 - `targets: Array<string>` - An array of other states which can be transitioned to from this state.
-- `enter: function|Array<function>` - Function(s) that will be called when `fsm.go` is called to enter this state.
-- `leave: function|Array<function>` - Function(s) that will be called when `fsm.go` is called to leave this state.
+- `enter: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to enter this state.
+- `leave: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to leave this state.
 
 Any enter or leave callback that returns a rejected promise will abort the current state transition.
 
 #### `fsm.go(state, [...args]) -> Promise`
 
-Transition to the given state id. The id must be a valid target of the current state. `args` will be passed into each enter/leave function.
+Transition to the given state id. The id must be a valid target of the current state.
+
+The state being transitioned to and `args` will be passed into each enter/leave function.
 
 Returns a promise that will be resolved or rejected when this state transition finishes.
 
