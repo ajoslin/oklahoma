@@ -33,8 +33,8 @@ var fsm = Oklahoma({
 })
 
 // Will change the state from 'alpha' to 'beta', running alpha's leave functions in order,
-// then beta's leave functions in order.
-// If any function throws an error or rejected promise, the state transition will abort.
+// then beta's enter functions in order.
+// If any enter/leave function throws an error or rejects a promise, the state transition will abort.
 fsm.go('beta')
 ```
 
@@ -75,5 +75,4 @@ If multiple state transitions are queued up at once, they will be run in order.
 For example, `fsm.go('bar'); fsm.go('baz');` will attempt to transition to bar, then once that completes (success or failure), will attempt a transition to baz.
 
 ## License
-
 MIT © [Andrew Joslin](http://ajoslin.com)
