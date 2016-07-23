@@ -72,7 +72,7 @@ Returns the id of the current state.
 
 Transition to the given state id. The id must be a valid target of the current state.
 
-The state being transitioned to and `args` will be passed into each enter/leave function.
+`args` will be passed into each enter/leave function.
 
 Returns a promise that will be resolved or rejected when this state transition finishes.
 

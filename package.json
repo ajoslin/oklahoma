@@ -28,7 +28,6 @@
     "*.js"
   ],
   "dependencies": {
-    "ap": "~0.2.0",
     "cast-array": "~1.0.1",
     "map-obj": "~1.0.1",
     "queue-that-promise": "~1.0.0",

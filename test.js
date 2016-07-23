@@ -20,13 +20,15 @@ test('the basics', function (t) {
 
   t.equal(fsm.current(), 'alpha')
 
-  fsm.go('beta').then(function () {
-    t.equal(fsm.current(), 'beta')
+  fsm.go('beta')
+    .then(function () {
+      t.equal(fsm.current(), 'beta')
 
-    fsm.go('alpha')
-      .then(t.fail)
-      .catch(t.pass)
-  })
+      fsm.go('alpha')
+        .then(t.fail)
+        .catch(t.pass)
+    })
+    .catch(t.fail)
 })
 
 test('transition to nonexistant state', function (t) {
@@ -53,12 +55,12 @@ test('parameters passed in to hooks', function (t) {
       foo: {
         targets: ['bar'],
         leave: function () {
-          t.deepEqual(toArray(arguments), ['bar', 'arg1', 'arg2'])
+          t.deepEqual(toArray(arguments), ['arg1', 'arg2'])
         }
       },
       bar: {
         enter: function () {
-          t.deepEqual(toArray(arguments), ['bar', 'arg1', 'arg2'])
+          t.deepEqual(toArray(arguments), ['arg1', 'arg2'])
         }
       }
     }
