@@ -31,6 +31,24 @@ test('the basics', function (t) {
     .catch(t.fail)
 })
 
+test('should not run hooks transitioning to current state', function (t) {
+  t.plan(1)
+  let count = 0
+
+  var fsm = Oklahoma({
+    initial: 'init',
+    states: {
+      init: {
+        enter: () => count++
+      }
+    }
+  })
+
+  fsm.go('init')
+    .then(() => t.equal(count, 0))
+    .catch(t.fail)
+})
+
 test('transition to nonexistant state', function (t) {
   t.plan(1)
 

@@ -39,6 +39,8 @@ function Oklahoma (options) {
     return queue.add(changeState)
 
     function changeState () {
+      if (getCurrent() === target) return Promise.resolve()
+
       return Promise.resolve()
         .then(function validateTransition () {
           assert.ok(states[getCurrent()].targets.indexOf(target) !== -1,
