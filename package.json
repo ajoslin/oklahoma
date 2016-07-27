@@ -30,7 +30,7 @@
   "dependencies": {
     "cast-array": "~1.0.1",
     "map-obj": "~1.0.1",
-    "queue-that-promise": "~1.0.0",
+    "queue-that-promise": "~1.1.0",
     "to-array": "~0.1.4"
   }
 }

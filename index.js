@@ -22,11 +22,16 @@ function Oklahoma (options) {
 
   return {
     current: getCurrent,
+    done: done,
     go: go
   }
 
   function getCurrent () {
     return current
+  }
+
+  function done () {
+    return queue.done()
   }
 
   function go (target/*, ...params*/) {

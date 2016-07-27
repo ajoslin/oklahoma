@@ -68,6 +68,10 @@ Any enter or leave callback that returns a rejected promise will abort the curre
 
 Returns the id of the current state.
 
+#### `fsm.done() -> Prmise`
+
+Returns a promise that will resolve once the fsm is done changing states.
+
 #### `fsm.go(state, [...args]) -> Promise`
 
 Transition to the given state id. The id must be a valid target of the current state.
