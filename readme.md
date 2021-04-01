@@ -27,6 +27,9 @@ var fsm = Oklahoma({
       enter: [
         action3,
         action4
+      ],
+      entered: [
+        callMeAfterEnterIsDone
       ]
     }
   }
@@ -60,6 +63,7 @@ An object where the keys are the ids of available states, and the values are an 
 
 - `targets: Array<string>` - An array of other states which can be transitioned to from this state.
 - `enter: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to enter this state.
+- `entered: function|Array<function>` - Function(s) that will be called in order after this state is fully entered.
 - `leave: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to leave this state.
 
 Any enter or leave callback that returns a rejected promise will abort the current state transition.

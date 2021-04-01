@@ -1,11 +1,11 @@
 'use strict'
 
-var assert = require('assert')
-var mapObject = require('map-obj')
-var toArray = require('to-array')
-var castArray = require('cast-array')
-var PromiseQueue = require('queue-that-promise')
-var PromiseSequence = require('./sequence')
+const assert = require('assert')
+const mapObject = require('map-obj')
+const toArray = require('to-array')
+const castArray = require('cast-array')
+const PromiseQueue = require('queue-that-promise')
+const PromiseSequence = require('./sequence')
 
 module.exports = Oklahoma
 
@@ -14,11 +14,14 @@ function Oklahoma (options) {
 
   assert.ok(options.initial, 'options.initial required')
   assert.ok(options.states, 'options.states required')
-  assert.ok(options.initial in options.states, options.initial + ' is not a valid state')
+  assert.ok(
+    options.initial in options.states,
+    options.initial + ' is not a valid state'
+  )
 
-  var current = options.initial
-  var states = mapObject(options.states, mapState)
-  var queue = PromiseQueue()
+  let current = options.initial
+  const states = mapObject(options.states, mapState)
+  const queue = PromiseQueue()
 
   return {
     current: getCurrent,
@@ -34,12 +37,14 @@ function Oklahoma (options) {
     return queue.done()
   }
 
-  function go (target/*, ...params*/) {
+  function go (target /*, ...params */) {
     if (!(target in states)) {
-      return Promise.reject(new Error('Cannot transition to non-existant state ' + target))
+      return Promise.reject(
+        new Error('Cannot transition to non-existant state ' + target)
+      )
     }
 
-    var args = toArray(arguments, 1)
+    const args = toArray(arguments, 1)
 
     return queue.add(changeState)
 
@@ -48,8 +53,10 @@ function Oklahoma (options) {
 
       return Promise.resolve()
         .then(function validateTransition () {
-          assert.ok(states[getCurrent()].targets.indexOf(target) !== -1,
-                    'Cannot transition to ' + target + ' from ' + getCurrent())
+          assert.ok(
+            states[getCurrent()].targets.indexOf(target) !== -1,
+            'Cannot transition to ' + target + ' from ' + getCurrent()
+          )
         })
         .then(function runLeave () {
           return states[getCurrent()].leave.apply(null, args)
@@ -60,17 +67,26 @@ function Oklahoma (options) {
         .then(function transitionDone () {
           current = target
         })
+        .then(function entered () {
+          // These just run, no waiting.
+          states[target].entered.apply(null, args)
+        })
     }
   }
 }
 
 function mapState (id, data) {
-  var enterHooks = castArray(data.enter || [])
-  var leaveHooks = castArray(data.leave || [])
+  const enterHooks = castArray(data.enter || [])
+  const enteredHooks = castArray(data.entered || [])
+  const leaveHooks = castArray(data.leave || [])
 
-  return [id, {
-    targets: data.targets || [],
-    enter: PromiseSequence(enterHooks),
-    leave: PromiseSequence(leaveHooks)
-  }]
+  return [
+    id,
+    {
+      targets: data.targets || [],
+      enter: PromiseSequence(enterHooks),
+      entered: PromiseSequence(enteredHooks),
+      leave: PromiseSequence(leaveHooks)
+    }
+  ]
 }
