@@ -52,12 +52,6 @@ function Oklahoma (options) {
       if (getCurrent() === target) return Promise.resolve()
 
       return Promise.resolve()
-        .then(function validateTransition () {
-          assert.ok(
-            states[getCurrent()].targets.indexOf(target) !== -1,
-            'Cannot transition to ' + target + ' from ' + getCurrent()
-          )
-        })
         .then(function runLeave () {
           return states[getCurrent()].leave.apply(null, args)
         })
@@ -83,7 +77,6 @@ function mapState (id, data) {
   return [
     id,
     {
-      targets: data.targets || [],
       enter: PromiseSequence(enterHooks),
       entered: PromiseSequence(enteredHooks),
       leave: PromiseSequence(leaveHooks)

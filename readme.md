@@ -17,7 +17,6 @@ var fsm = Oklahoma({
   initial: 'alpha',
   states: {
     alpha: {
-      targets: ['beta'],
       leave: [
         action1,
         action2
@@ -61,7 +60,6 @@ Type: `object`
 
 An object where the keys are the ids of available states, and the values are an object describing each state:
 
-- `targets: Array<string>` - An array of other states which can be transitioned to from this state.
 - `enter: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to enter this state.
 - `entered: function|Array<function>` - Function(s) that will be called in order after this state is fully entered.
 - `leave: function|Array<function>` - Function(s) that will be called in order when `fsm.go` is called to leave this state.
